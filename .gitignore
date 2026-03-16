@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# .NET build outputs
+bin/
+obj/
+
+# IDE
+.idea/
+*.user
+.vs/
+
+# Node
+node_modules/
+dist/
+
+# SQLite databases (optional — remove if you want to track the DB)
+*.sqlite
