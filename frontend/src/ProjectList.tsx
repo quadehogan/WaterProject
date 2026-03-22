@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { Project } from './types/Project';
+import './ProjectList.css';
 
-function ProjectList() {
+function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -11,20 +12,26 @@ function ProjectList() {
   const totalPages = Math.ceil(totalProjects / pageSize);
 
   useEffect(() => {
+    setCurrentPage(0);
+  }, [selectedCategories]);
+
+  useEffect(() => {
     const fetchProjects = async () => {
-      const response = await fetch(`https://localhost:4000/api/Water/AllProjects?pageSize=${pageSize}&pageNumber=${currentPage}`);
+
+      const categoryParams = selectedCategories.map(cat => `categories=${encodeURIComponent(cat)}`).join('&');
+
+      const response = await fetch(`https://localhost:4000/api/Water/AllProjects?pageSize=${pageSize}&pageNumber=${currentPage}${selectedCategories.length ? `&${categoryParams}` : ''}`);
       const data = await response.json();
       setProjects(data.projects);
       setTotalProjects(data.totalProjects);
     };
 
     fetchProjects();
-  }, [pageSize, currentPage]);
+  }, [pageSize, currentPage, selectedCategories]);
 
   return (
-    <>
-    <div className="container my-4">
-      <h1 className="mb-4">Water Projects</h1>
+    <div className="project-list">
+    <div className="container mb-4">
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {projects.map((project) => (
           <div className="col" key={project.projectId}>
@@ -85,7 +92,7 @@ function ProjectList() {
         </select>
       </label>
     </div>
-    </>
+    </div>
   );
 }
 

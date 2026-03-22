@@ -1,0 +1,62 @@
+/* Card */
+.project-list .card {
+  background-color: var(--social-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.project-list .card-title {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+/* Buttons */
+.project-list .btn-outline-primary {
+  color: var(--accent);
+  border-color: var(--accent);
+  background-color: transparent;
+}
+
+.project-list .btn-outline-primary:hover,
+.project-list .btn-outline-primary:focus {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.project-list .btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.project-list .btn-primary:hover,
+.project-list .btn-primary:focus {
+  background-color: var(--accent-border);
+  border-color: var(--accent-border);
+  color: #fff;
+}
+
+.project-list .btn-outline-secondary {
+  color: var(--text);
+  border-color: var(--border);
+  background-color: transparent;
+}
+
+.project-list .btn-outline-secondary:hover {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Select */
+.project-list .form-select {
+  background-color: var(--social-bg);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* Heading */
+.project-list h1 {
+  color: var(--text-h);
+}

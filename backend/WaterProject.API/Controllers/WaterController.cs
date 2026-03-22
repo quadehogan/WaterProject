@@ -16,29 +16,39 @@ namespace WaterProject.API.Controllers
         }
         
         [HttpGet("AllProjects")]
-        public IActionResult GetProjects(int pageSize = 10, int pageNumber = 0)
+        public IActionResult GetProjects(int pageSize = 10, int pageNumber = 0, [FromQuery] List<string>? categories = null)
         {
-            var skipCalc = pageNumber * pageSize;
-            var allProjects =  _waterContext.Projects
-                .Skip(skipCalc)
-                .Take(pageSize)    
-                .ToList();
+            var query = _waterContext.Projects.AsQueryable();
+
+            if (categories != null && categories.Any())
+            {
+                query = query.Where(project => categories.Contains(project.ProjectType));
+            }
             
-            var totalNumProjects = _waterContext.Projects.Count();
+            var skipCalc = pageNumber * pageSize;
+            var allProjects = query
+                .Skip(skipCalc)
+                .Take(pageSize)
+                .ToList();
+
+            var totalNumProjects = query.Count();
 
             return Ok(new
             {
                 Projects = allProjects,
                 totalProjects = totalNumProjects
             });
-
         }
         
-        [HttpGet("FunctionalProjects")]
-        public IEnumerable<Project> GetFunctionalProjects()
+        [HttpGet("GetProjectTypes")]
+        public IActionResult GetProjectTypes()
         {
-            var functionalProjects = _waterContext.Projects.Where(p => p.ProjectFunctionalityStatus == "Functional").ToList();
-            return functionalProjects;
+            var projectTypes = _waterContext.Projects
+                .Select(p => p.ProjectType)
+                .Distinct()
+                .ToList();
+            
+            return Ok(projectTypes);
         }
     }
 }

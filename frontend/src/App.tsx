@@ -1,11 +1,30 @@
+import { useState } from 'react';
 import './App.css'
+import CategoryFilter from './CategoryFilter'
 import ProjectList from './ProjectList'
+import WelcomeBand from './WelcomeBand'
 
 function App() {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   return (
    <>
-      <ProjectList />
+   <div className="container">
+    <div className="row">
+      <div className="col-md-12">
+        <WelcomeBand />
+      </div>
+    </div>
+      <div className="row">
+        <div className="col-md-3">
+          <CategoryFilter 
+          selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
+        </div>
+        <div className="col-md-9">
+          <ProjectList selectedCategories={selectedCategories} />
+        </div>
+      </div>
+    </div>
    </>
   )
 }
