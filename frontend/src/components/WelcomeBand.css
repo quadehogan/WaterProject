@@ -1,0 +1,16 @@
+.welcome-band {
+  width: 100%;
+  padding: 40px 32px;
+  margin-bottom: 32px;
+  background-color: var(--social-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.welcome-band__title {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
