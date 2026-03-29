@@ -3,6 +3,7 @@ import WelcomeBand from "../components/WelcomeBand";
 import { useCart } from "../context/CartContext";
 import type { CartItem } from "../types/CartItem";
 import { useState } from "react";
+import "./DonatePage.css";
 
 function DonatePage() {
 
@@ -21,21 +22,27 @@ function DonatePage() {
     };
 
     return (
-        <>
-        <WelcomeBand />
-        <h2> Donate to Project {projectName} </h2>
+        <div className="donate-page">
+            <WelcomeBand />
+            <h2>Donate to Project {projectName}</h2>
 
-        <div>
-            <input 
-            type="number" 
-            placeholder="Enter donation amount" 
-            value={donationAmount} 
-            onChange = {(e) => setDonationAmount(Number(e.target.value))}/>
-            <button onClick={() => handleAddToCart(donationAmount)}>Add to Cart</button>
+            <div className="donate-page__form">
+                <input
+                    className="donate-page__input"
+                    type="number"
+                    placeholder="Enter donation amount"
+                    value={donationAmount}
+                    onChange={(e) => setDonationAmount(Number(e.target.value))}
+                />
+                <button className="donate-page__btn--add" onClick={() => handleAddToCart(donationAmount)}>
+                    Add to Cart
+                </button>
+            </div>
+
+            <button className="donate-page__btn--back" onClick={() => navigate('/projects')}>
+                Go Back
+            </button>
         </div>
-
-        <button onClick={() => navigate('/projects')}>Go Back</button>
-        </>
     );
 }
 

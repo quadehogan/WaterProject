@@ -1,3 +1,5 @@
+import './Pagination.css';
+
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
@@ -8,49 +10,47 @@ interface PaginationProps {
 
 const Pagination = ({ currentPage, totalPages, pageSize, onPageChange, onPageSizeChange }: PaginationProps) => {
 
-    return(
-    <>
-        <div className="container d-flex align-items-center gap-2 my-3 flex-wrap">
-        <button
-            className="btn btn-outline-primary"
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 0}
-        >
-            &laquo; Previous
-        </button>
-
-        {Array.from({ length: totalPages }, (_, i) => (
+    return (
+        <div className="pagination">
             <button
-            key={i}
-            className={`btn ${i === currentPage ? 'btn-primary' : 'btn-outline-secondary'}`}
-            onClick={() => onPageChange(i)}
+                className="pagination__btn"
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 0}
             >
-            {i + 1}
+                &laquo; Previous
             </button>
-        ))}
 
-        <button
-            className="btn btn-outline-primary"
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage >= totalPages - 1}
-        >
-            Next &raquo;
-        </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                    key={i}
+                    className={`pagination__btn ${i === currentPage ? 'pagination__btn--active' : ''}`}
+                    onClick={() => onPageChange(i)}
+                >
+                    {i + 1}
+                </button>
+            ))}
 
-        <label className="d-flex align-items-center gap-2 ms-auto mb-0">
-            Results per page:
-            <select
-            className="form-select form-select-sm w-auto"
-            value={pageSize}
-            onChange={(e) => { onPageSizeChange(Number(e.target.value)); onPageChange(0); }}
+            <button
+                className="pagination__btn"
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages - 1}
             >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            </select>
-        </label>
+                Next &raquo;
+            </button>
+
+            <label className="pagination__page-size">
+                Results per page:
+                <select
+                    className="pagination__select"
+                    value={pageSize}
+                    onChange={(e) => { onPageSizeChange(Number(e.target.value)); onPageChange(0); }}
+                >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </label>
         </div>
-    </>
     );
 }
 

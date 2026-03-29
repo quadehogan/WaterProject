@@ -1,0 +1,27 @@
+.cart-summary {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background: var(--social-bg);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  color: var(--text-h);
+  font-weight: 500;
+  transition: border-color 0.15s;
+}
+
+.cart-summary:hover {
+  border-color: var(--accent-border);
+}
+
+.cart-summary__amount {
+  font-family: var(--mono);
+  color: var(--accent);
+}

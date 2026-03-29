@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Project } from "../types/Project";
 import { addProject } from "../api/ProjectsAPI";
+import "./ProjectForm.css";
 
 interface NewProjectFormProps {
     onSuccess: () => void;
@@ -16,7 +17,7 @@ const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
         projectImpact: 0,
         projectPhase: "",
         projectFunctionalityStatus: ""
-    });  
+    });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -31,60 +32,44 @@ const NewProjectForm = ({ onSuccess, onCancel }: NewProjectFormProps) => {
         onSuccess();
     };
 
-    return(
-        <form onSubmit={handleSubmit}>
+    return (
+        <form className="project-form" onSubmit={handleSubmit}>
             <h2>Add New Project</h2>
 
-            <label>Project Name:
-                <input 
-                name="projectName" 
-                value={formData.projectName} 
-                type="text" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Project Name</label>
+                <input className="project-form__input" name="projectName" value={formData.projectName} type="text" onChange={handleChange} />
+            </div>
 
-            <label>Project Type:
-                <input 
-                name="projectType" 
-                value={formData.projectType} 
-                type="text" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Project Type</label>
+                <input className="project-form__input" name="projectType" value={formData.projectType} type="text" onChange={handleChange} />
+            </div>
 
-            <label>Regional Program:
-                <input 
-                name="projectRegionalProgram" 
-                value={formData.projectRegionalProgram} 
-                type="text" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Regional Program</label>
+                <input className="project-form__input" name="projectRegionalProgram" value={formData.projectRegionalProgram} type="text" onChange={handleChange} />
+            </div>
 
-            <label>Impact (Individuals Served):
-                <input 
-                name="projectImpact" 
-                value={formData.projectImpact} 
-                type="number" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Impact (Individuals Served)</label>
+                <input className="project-form__input" name="projectImpact" value={formData.projectImpact} type="number" onChange={handleChange} />
+            </div>
 
-            <label>Phase:
-                <input 
-                name="projectPhase" 
-                value={formData.projectPhase} 
-                type="text" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Phase</label>
+                <input className="project-form__input" name="projectPhase" value={formData.projectPhase} type="text" onChange={handleChange} />
+            </div>
 
-            <label>Functionality Status:
-                <input 
-                name="projectFunctionalityStatus" 
-                value={formData.projectFunctionalityStatus} 
-                type="text" 
-                onChange={handleChange} />
-            </label>
+            <div className="project-form__field">
+                <label className="project-form__label">Functionality Status</label>
+                <input className="project-form__input" name="projectFunctionalityStatus" value={formData.projectFunctionalityStatus} type="text" onChange={handleChange} />
+            </div>
 
-            <button type="submit">Add Project</button>
-            <button type="button" onClick={onCancel}>Cancel</button>
+            <div className="project-form__actions">
+                <button className="project-form__btn--submit" type="submit">Add Project</button>
+                <button className="project-form__btn--cancel" type="button" onClick={onCancel}>Cancel</button>
+            </div>
         </form>
     );
 };
