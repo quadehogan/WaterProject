@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Project } from '../types/Project';
 import './ProjectList.css';
 import { useNavigate } from 'react-router-dom';
+import { fetchProjects } from '../api/ProjectsAPI';
 
 function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
 
@@ -10,6 +11,8 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalProjects, setTotalProjects] = useState<number>(0);
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const totalPages = Math.ceil(totalProjects / pageSize);
 
@@ -18,18 +21,30 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   }, [selectedCategories]);
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const loadProjects = async () => {
 
-      const categoryParams = selectedCategories.map(cat => `categories=${encodeURIComponent(cat)}`).join('&');
-
-      const response = await fetch(`https://localhost:4000/api/Water/AllProjects?pageSize=${pageSize}&pageNumber=${currentPage}${selectedCategories.length ? `&${categoryParams}` : ''}`);
-      const data = await response.json();
-      setProjects(data.projects);
-      setTotalProjects(data.totalProjects);
+      try {
+        setLoading(true);
+        const data = await fetchProjects(pageSize, currentPage, selectedCategories);
+        setTotalProjects(data.totalProjects);
+        setProjects(data.projects);
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchProjects();
+    loadProjects();
   }, [pageSize, currentPage, selectedCategories]);
+
+  if (loading) {
+    return <div className="text-center my-5">Loading projects...</div>;
+  }
+
+  if (error) {
+    return <div className="alert alert-danger text-center my-5">Error: {error}</div>;
+  }
 
   return (
     <div className="project-list">
