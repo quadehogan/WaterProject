@@ -3,6 +3,7 @@ import type { Project } from '../types/Project';
 import './ProjectList.css';
 import { useNavigate } from 'react-router-dom';
 import { fetchProjects } from '../api/ProjectsAPI';
+import Pagination from './Pagination';
 
 function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
 
@@ -60,7 +61,7 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
                   <li><strong>Regional Program:</strong> {project.projectRegionalProgram}</li>
                   <li><strong>Impact:</strong> {project.projectImpact} Individuals Served</li>
                   <li><strong>Phase:</strong> {project.projectPhase}</li>
-                  <li><strong>Functionality Status:</strong> {project.projectFunctionallityStatus}</li>
+                  <li><strong>Functionality Status:</strong> {project.projectFunctionalityStatus}</li>
                 </ul>
 
                 <button className="btn btn-donate" onClick={() => navigate(`/donate/${project.projectId}/${project.projectName}`)}>
@@ -73,46 +74,8 @@ function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
       </div>
     </div>
 
-    <div className="container d-flex align-items-center gap-2 my-3 flex-wrap">
-      <button
-        className="btn btn-outline-primary"
-        onClick={() => setCurrentPage(currentPage - 1)}
-        disabled={currentPage === 0}
-      >
-        &laquo; Previous
-      </button>
+    <Pagination currentPage={currentPage} totalPages={totalPages} pageSize={pageSize} onPageChange={setCurrentPage} onPageSizeChange={setPageSize} />
 
-      {Array.from({ length: totalPages }, (_, i) => (
-        <button
-          key={i}
-          className={`btn ${i === currentPage ? 'btn-primary' : 'btn-outline-secondary'}`}
-          onClick={() => setCurrentPage(i)}
-        >
-          {i + 1}
-        </button>
-      ))}
-
-      <button
-        className="btn btn-outline-primary"
-        onClick={() => setCurrentPage(currentPage + 1)}
-        disabled={currentPage >= totalPages - 1}
-      >
-        Next &raquo;
-      </button>
-
-      <label className="d-flex align-items-center gap-2 ms-auto mb-0">
-        Results per page:
-        <select
-          className="form-select form-select-sm w-auto"
-          value={pageSize}
-          onChange={(e) => { setPageSize(Number(e.target.value)); setCurrentPage(0); }}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-      </label>
-    </div>
     </div>
   );
 }

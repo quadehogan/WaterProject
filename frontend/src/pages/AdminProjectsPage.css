@@ -1,0 +1,114 @@
+.admin-projects {
+  padding: 0 32px 48px;
+}
+
+.admin-projects h1 {
+  text-align: left;
+}
+
+.admin-projects__table-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.admin-projects__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-projects__table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-projects__table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.admin-projects__table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.admin-projects__table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.admin-projects__table tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+.admin-projects__table td {
+  padding: 12px 16px;
+  color: var(--text);
+}
+
+.admin-projects__table td.id {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.admin-projects__table td.name {
+  color: var(--text-h);
+  font-weight: 500;
+}
+
+.admin-projects__table td.actions {
+  white-space: nowrap;
+  display: flex;
+  gap: 8px;
+}
+
+.admin-projects__status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.admin-projects__status-badge--active {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.admin-projects__status-badge--inactive {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.admin-projects__btn {
+  padding: 4px 14px;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.admin-projects__btn--edit {
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+}
+
+.admin-projects__btn--edit:hover {
+  background: var(--accent-bg);
+}
+
+.admin-projects__btn--delete {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.admin-projects__btn--delete:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
