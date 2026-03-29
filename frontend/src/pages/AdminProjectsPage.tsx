@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import type { Project } from "../types/Project";
-import { fetchProjects } from "../api/ProjectsAPI";
+import { deleteProject, fetchProjects } from "../api/ProjectsAPI";
 import Pagination from "../components/Pagination";
 import "./AdminProjectsPage.css";
 import NewProjectForm from "../components/NewProjectForm";
+import EditProjectForm from "../components/EditProjectForm";
 
 
 const AdminProjectsPage = () => {
@@ -15,6 +16,7 @@ const AdminProjectsPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   const totalPages = Math.ceil(totalProjects / pageSize);
 
@@ -38,6 +40,18 @@ const AdminProjectsPage = () => {
     loadProjects();
 
   }, [pageSize, currentPage]);
+
+  const handleDelete = async (projectId: number) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+    if (!confirmDelete) return;
+
+    try {
+        await deleteProject(projectId);
+        setProjects(prev => prev.filter(p => p.projectId !== projectId));
+    } catch (error) {
+        setError((error as Error).message);
+    }
+  };
 
   if (loading) {
     return <div className="text-center my-5">Loading projects...</div>;
@@ -71,6 +85,17 @@ const AdminProjectsPage = () => {
             />
         )}
 
+        {editingProject && (
+            <EditProjectForm 
+            project={editingProject}
+            onSuccess={() => {
+                setEditingProject(null);
+                fetchProjects(pageSize, currentPage, []).then((data) => setProjects(data.projects));
+            }}
+            onCancel={() => setEditingProject(null)} 
+            />
+        )}
+
         <div className="admin-projects__table-wrapper">
             <table className="admin-projects__table">
                 <thead>
@@ -93,13 +118,13 @@ const AdminProjectsPage = () => {
                             <td className="actions">
                                 <button
                                     className="admin-projects__btn admin-projects__btn--edit"
-                                    onClick={() => console.log(`Edit project ${project.projectId}`)}
+                                    onClick={() => setEditingProject(project)}
                                 >
                                     Edit
                                 </button>
                                 <button
                                     className="admin-projects__btn admin-projects__btn--delete"
-                                    onClick={() => console.log(`Delete project ${project.projectId}`)}
+                                    onClick={() => handleDelete(project.projectId)}
                                 >
                                     Delete
                                 </button>

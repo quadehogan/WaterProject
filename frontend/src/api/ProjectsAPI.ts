@@ -51,3 +51,40 @@ export const addProject = async (newProject: Project): Promise<Project> => {
         throw error;
     }
 }
+
+export const updateProject = async (projectId: number, updatedProject: Project): Promise<Project> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/UpdateProject/${projectId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedProject)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating project:', error);
+        throw error;
+    }
+}
+
+export const deleteProject = async (projectId: number): Promise<void> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/DeleteProject/${projectId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error deleting project:', error);
+        throw error;
+    }
+}
