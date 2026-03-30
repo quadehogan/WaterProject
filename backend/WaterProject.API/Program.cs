@@ -15,7 +15,7 @@ builder.Services.AddDbContext<WaterDbContext>(options =>
 
 builder.Services.AddCors(options => options.AddPolicy(
     "AllowFrontend",
-    policy => policy.WithOrigins("http://localhost:3002")
+    policy => policy.WithOrigins("http://localhost:3002", "https://ambitious-forest-061f0e71e.1.azurestaticapps.net")
         .AllowAnyHeader()
         .AllowAnyMethod()
 ));
