@@ -4,11 +4,13 @@
 # .NET build outputs
 bin/
 obj/
+publish/
 
 # IDE
 .idea/
 *.user
 .vs/
+.vscode/
 
 # Node
 node_modules/
